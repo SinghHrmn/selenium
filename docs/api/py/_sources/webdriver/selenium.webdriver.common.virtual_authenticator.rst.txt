@@ -1,5 +1,5 @@
 ﻿selenium.webdriver.common.virtual\_authenticator
-===============================
+================================================
 
 .. automodule:: selenium.webdriver.common.virtual_authenticator
 
