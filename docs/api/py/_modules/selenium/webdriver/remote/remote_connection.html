@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>selenium.webdriver.remote.remote_connection &#8212; Selenium 4.1.0 documentation</title>
+    <title>selenium.webdriver.remote.remote_connection &#8212; Selenium 4.1 documentation</title>
     <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
     
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../../index.html">Selenium 4.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Selenium 4.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -183,7 +183,7 @@
 
     <span class="k">def</span> <span class="nf">_get_connection_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pool_manager_init_args</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;timeout&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span>
+            <span class="s1">&#39;timeout&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_timeout</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ca_certs</span><span class="p">:</span>
             <span class="n">pool_manager_init_args</span><span class="p">[</span><span class="s1">&#39;cert_reqs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CERT_REQUIRED&#39;</span>
@@ -348,21 +348,7 @@
             <span class="n">Command</span><span class="o">.</span><span class="n">MINIMIZE_WINDOW</span><span class="p">:</span>
                 <span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/window/minimize&#39;</span><span class="p">),</span>
             <span class="n">Command</span><span class="o">.</span><span class="n">PRINT_PAGE</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/print&#39;</span><span class="p">),</span>
-            <span class="n">Command</span><span class="o">.</span><span class="n">ADD_VIRTUAL_AUTHENTICATOR</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/webauthn/authenticator&#39;</span><span class="p">),</span>
-            <span class="n">Command</span><span class="o">.</span><span class="n">REMOVE_VIRTUAL_AUTHENTICATOR</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/webauthn/authenticator/$authenticatorId&#39;</span><span class="p">),</span>
-            <span class="n">Command</span><span class="o">.</span><span class="n">ADD_CREDENTIAL</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/webauthn/authenticator/$authenticatorId/credential&#39;</span><span class="p">),</span>
-            <span class="n">Command</span><span class="o">.</span><span class="n">GET_CREDENTIALS</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/webauthn/authenticator/$authenticatorId/credentials&#39;</span><span class="p">),</span>
-            <span class="n">Command</span><span class="o">.</span><span class="n">REMOVE_CREDENTIAL</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/webauthn/authenticator/$authenticatorId/credentials/$credentialId&#39;</span><span class="p">),</span>
-            <span class="n">Command</span><span class="o">.</span><span class="n">REMOVE_ALL_CREDENTIALS</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/webauthn/authenticator/$authenticatorId/credentials&#39;</span><span class="p">),</span>
-            <span class="n">Command</span><span class="o">.</span><span class="n">SET_USER_VERIFIED</span><span class="p">:</span>
-                <span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/webauthn/authenticator/$authenticatorId/uv&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/session/$sessionId/print&#39;</span><span class="p">)</span>
         <span class="p">}</span>
 
 <div class="viewcode-block" id="RemoteConnection.execute"><a class="viewcode-back" href="../../../../webdriver_remote/selenium.webdriver.remote.remote_connection.html#selenium.webdriver.remote.remote_connection.RemoteConnection.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
@@ -490,7 +476,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../../index.html">Selenium 4.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Selenium 4.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
