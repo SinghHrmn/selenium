@@ -19,7 +19,7 @@
 
       RelativeBy
 
-  .. rubric:: Methods
+  .. rubric:: Functions
   .. autosummary::
 
       with_tag_name
