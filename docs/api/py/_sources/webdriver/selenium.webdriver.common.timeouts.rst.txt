@@ -1,29 +1,29 @@
-selenium.webdriver.common.timeouts
-========================================
+﻿selenium.webdriver.common.timeouts
+==================================
 
-.. automodule:: selenium.webdriver.common.actions.timeouts
+.. automodule:: selenium.webdriver.common.timeouts
 
+   
+   
+   
 
+   
+   
+   
 
-
-
-
-
-
-
-
-
+   
+   
    .. rubric:: Classes
 
    .. autosummary::
-
+   
       Timeouts
+   
+   
 
-
-
-
-
-
+   
+   
+   
 
 
 
