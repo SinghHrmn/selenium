@@ -679,6 +679,8 @@ class WebDriver {
 
     /** @private @const {(function(this: void): ?|undefined)} */
     this.onQuit_ = onQuit
+
+    this.authenticatorId_ = null
   }
 
   /**
@@ -1514,6 +1516,58 @@ class WebDriver {
         callback(event)
       }
     })
+  }
+
+  virtualAuthenticatorId() {
+    return this.authenticatorId_
+  }
+
+  addVirtualAuthenticator(options) {
+    this.authenticatorId_ = this.execute(
+      new command.Command(command.Name.ADD_VIRTUAL_AUTHENTICATOR).setParameter(
+        'options',
+        options.toDict()
+      )
+    ).values()
+  }
+
+  removeVirtualAuthenticator() {
+    this.execute(
+      new command.Command(
+        command.Name.REMOVE_VIRTUAL_AUTHENTICATOR
+      ).setParameter('authenticatorId', authenticatorId_)
+    )
+    authenticatorId_ = null
+  }
+
+  addCredential(credential) {
+    this.execute(new command.Command(command.Name.ADD_CREDENTIAL)
+        .setParameter(credential.toDict()) // DOUBT!!!
+        .setParameter('authenticatorId', authenticatorId_)
+    )
+  }
+
+  getCredentials() {
+    credential_data = this.execute(new command.Command(command.Name.GET_CREDENTIALS)
+      .setParameter('authenticatorId', authenticatorId_))
+      return credential_data.values()
+  }
+
+  removeCredential(credential_id) {
+    this.execute(new command.Command(command.Name.REMOVE_CREDENTIAL)
+      .setParameter('credentialId', credential_id)
+      .setParameter('authenticatorId', authenticatorId_))
+  }
+
+  removeAllCredentials() {
+    this.execute(new command.Command(command.Name.REMOVE_ALL_CREDENTIALS)
+      .setParameter('authenticatorId', authenticatorId_))
+  }
+
+  setUserVerified(verified) {
+    this.execute(new command.Command(command.Name.SET_USER_VERIFIED)
+      .setParameter('authenticatorId', authenticatorId_))
+      .setParameter('isUserVerified', verified)
   }
 }
 
