@@ -18,7 +18,7 @@
 'use strict'
 
 const assert = require('assert')
-const virtual_authenticator =
+const virtualAuthenticatorCredential =
   require('../../lib/virtual_authenticator').Credential
 
 describe('Credentials', function () {
@@ -51,7 +51,7 @@ describe('Credentials', function () {
 
   it('can testRkEnabledCredential', function () {
     const { _id, rpId, userHandle, privateKey, signCount } = data
-    const credential = new virtual_authenticator().createResidentCredential(
+    const credential = new virtualAuthenticatorCredential().createResidentCredential(
       _id,
       rpId,
       userHandle,
@@ -81,7 +81,7 @@ describe('Credentials', function () {
 
   it('can testRkDisabledCredential', function() {
     const { _id, rpId, userHandle, privateKey, signCount } = data
-    const credential = new virtual_authenticator().createNonResidentCredential(
+    const credential = new virtualAuthenticatorCredential().createNonResidentCredential(
       _id,
       rpId,
       privateKey,
@@ -106,7 +106,7 @@ describe('Credentials', function () {
 
   it('can testToDict', function () {
     const { _id, rpId, userHandle, privateKey, signCount } = data
-    const credential = new virtual_authenticator().createResidentCredential(
+    const credential = new virtualAuthenticatorCredential().createResidentCredential(
       _id,
       rpId,
       userHandle,

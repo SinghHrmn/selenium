@@ -90,12 +90,19 @@ class VirtualAuthenticatorOptions {
 
   toDict() {
     return {
-      protocol: this.getProtocol(),
-      transport: this.getTransport(),
-      hasResidentKey: this.getHasResidentKey(),
-      hasUserVerification: this.getHasUserVerification(),
-      isUserConsenting: this.getIsUserConsenting(),
-      isUserVerified: this.getIsUserVerified(),
+      "protocol": this.getProtocol(),
+      "transport": this.getTransport(),
+      "hasResidentKey": this.getHasResidentKey(),
+      "hasUserVerification": this.getHasUserVerification(),
+      "isUserConsenting": this.getIsUserConsenting(),
+      "isUserVerified": this.getIsUserVerified(),
+
+      // this.getProtocol(),
+      // this.getTransport(),
+      // this.getHasResidentKey(),
+      // this.getHasUserVerification(),
+      // this.getIsUserConsenting(),
+      // this.getIsUserVerified(),
     }
   }
 }

@@ -732,8 +732,10 @@ class WebDriver {
   /** @override */
   async execute(command) {
     command.setParameter('sessionId', this.session_)
+
     let parameters = await toWireValue(command.getParameters())
     command.setParameters(parameters)
+    console.log('command = ', command)
     let value = await this.executor_.execute(command)
     return fromWireValue(this, value)
   }
@@ -1518,31 +1520,38 @@ class WebDriver {
     })
   }
 
+  // Virtual Authenticator 
+
   virtualAuthenticatorId() {
     return this.authenticatorId_
   }
 
   addVirtualAuthenticator(options) {
+    console.log("authenticatorID_ Old", this.authenticatorId_)
+    console.log("OPTIONS = ", options)
+
     this.authenticatorId_ = this.execute(
       new command.Command(command.Name.ADD_VIRTUAL_AUTHENTICATOR).setParameter(
         'options',
         options.toDict()
       )
-    ).values()
+    )
+
+    console.log("authenticatorID_ New", this.authenticatorId_)
   }
 
   removeVirtualAuthenticator() {
     this.execute(
       new command.Command(
         command.Name.REMOVE_VIRTUAL_AUTHENTICATOR
-      ).setParameter('authenticatorId', authenticatorId_)
+      ).setParameter('authenticatorId', this.authenticatorId_)
     )
-    authenticatorId_ = null
+    this.authenticatorId_ = null
   }
 
   addCredential(credential) {
     this.execute(new command.Command(command.Name.ADD_CREDENTIAL)
-        .setParameter(credential.toDict()) // DOUBT!!!
+        .setParameter(credential) // DOUBT!!!
         .setParameter('authenticatorId', authenticatorId_)
     )
   }
@@ -1550,7 +1559,7 @@ class WebDriver {
   getCredentials() {
     credential_data = this.execute(new command.Command(command.Name.GET_CREDENTIALS)
       .setParameter('authenticatorId', authenticatorId_))
-      return credential_data.values()
+      return credential_data.value
   }
 
   removeCredential(credential_id) {
@@ -3227,7 +3236,7 @@ class AlertPromise extends Alert {
 }
 
 // PUBLIC API
-
+   
 module.exports = {
   Alert,
   AlertPromise,
