@@ -36,8 +36,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="selenium-webdriver-edge-service">
-<h1>selenium.webdriver.edge.service<a class="headerlink" href="#selenium-webdriver-edge-service" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-selenium.webdriver.edge.service">
+<span id="selenium-webdriver-edge-service"></span><h1>selenium.webdriver.edge.service<a class="headerlink" href="#module-selenium.webdriver.edge.service" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#selenium.webdriver.edge.service.Service" title="selenium.webdriver.edge.service.Service"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Service</span></code></a>(executable_path,&nbsp;port,&nbsp;verbose,&nbsp;…)</td>
+<td>Creates a new instance of the EdgeDriver service.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="selenium.webdriver.edge.service.Service">
+<em class="property">class </em><code class="descclassname">selenium.webdriver.edge.service.</code><code class="descname">Service</code><span class="sig-paren">(</span><em>executable_path: str = 'msedgedriver'</em>, <em>port: int = 0</em>, <em>verbose: bool = False</em>, <em>log_path: str = None</em>, <em>service_args: List[str] = None</em>, <em>env=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/selenium/webdriver/edge/service.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.edge.service.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new instance of the EdgeDriver service.
+EdgeDriver provides an interface for Microsoft WebDriver to use
+with Microsoft Edge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li>executable_path : Path to the Microsoft WebDriver binary.</li>
+<li>port : Run the remote service on a specified port. Defaults to 0, which binds to a random open port
+of the system’s choosing.</li>
+<li>verbose : Whether to make the webdriver more verbose (passes the –verbose option to the binary).
+Defaults to False.</li>
+<li>log_path : Optional path for the webdriver binary to log to. Defaults to None which disables logging.</li>
+<li>service_args : List of args to pass to the WebDriver service.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 

@@ -36,8 +36,81 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="selenium-webdriver-common-actions-action-builder">
-<h1>selenium.webdriver.common.actions.action_builder<a class="headerlink" href="#selenium-webdriver-common-actions-action-builder" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-selenium.webdriver.common.actions.action_builder">
+<span id="selenium-webdriver-common-actions-action-builder"></span><h1>selenium.webdriver.common.actions.action_builder<a class="headerlink" href="#module-selenium.webdriver.common.actions.action_builder" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder" title="selenium.webdriver.common.actions.action_builder.ActionBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ActionBuilder</span></code></a>(driver[,&nbsp;mouse,&nbsp;wheel,&nbsp;…])</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder">
+<em class="property">class </em><code class="descclassname">selenium.webdriver.common.actions.action_builder.</code><code class="descname">ActionBuilder</code><span class="sig-paren">(</span><em>driver</em>, <em>mouse=None</em>, <em>wheel=None</em>, <em>keyboard=None</em>, <em>duration=250</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/selenium/webdriver/common/actions/action_builder.html#ActionBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.add_key_input">
+<code class="descname">add_key_input</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span> &#x2192; selenium.webdriver.common.actions.key_input.KeyInput<a class="reference internal" href="../_modules/selenium/webdriver/common/actions/action_builder.html#ActionBuilder.add_key_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.add_key_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.add_pointer_input">
+<code class="descname">add_pointer_input</code><span class="sig-paren">(</span><em>kind</em>, <em>name</em><span class="sig-paren">)</span> &#x2192; selenium.webdriver.common.actions.pointer_input.PointerInput<a class="reference internal" href="../_modules/selenium/webdriver/common/actions/action_builder.html#ActionBuilder.add_pointer_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.add_pointer_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.add_wheel_input">
+<code class="descname">add_wheel_input</code><span class="sig-paren">(</span><em>kind</em>, <em>name</em><span class="sig-paren">)</span> &#x2192; selenium.webdriver.common.actions.wheel_input.WheelInput<a class="reference internal" href="../_modules/selenium/webdriver/common/actions/action_builder.html#ActionBuilder.add_wheel_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.add_wheel_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.clear_actions">
+<code class="descname">clear_actions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/selenium/webdriver/common/actions/action_builder.html#ActionBuilder.clear_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.clear_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears actions that are already stored on the remote end</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.get_device_with">
+<code class="descname">get_device_with</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span> &#x2192; Union[selenium.webdriver.common.actions.wheel_input.WheelInput, selenium.webdriver.common.actions.pointer_input.PointerInput, selenium.webdriver.common.actions.key_input.KeyInput]<a class="reference internal" href="../_modules/selenium/webdriver/common/actions/action_builder.html#ActionBuilder.get_device_with"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.get_device_with" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.key_action">
+<code class="descname">key_action</code><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.key_action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.key_inputs">
+<code class="descname">key_inputs</code><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.key_inputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.perform">
+<code class="descname">perform</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/selenium/webdriver/common/actions/action_builder.html#ActionBuilder.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.perform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.pointer_action">
+<code class="descname">pointer_action</code><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.pointer_action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.pointer_inputs">
+<code class="descname">pointer_inputs</code><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.pointer_inputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="selenium.webdriver.common.actions.action_builder.ActionBuilder.wheel_action">
+<code class="descname">wheel_action</code><a class="headerlink" href="#selenium.webdriver.common.actions.action_builder.ActionBuilder.wheel_action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 

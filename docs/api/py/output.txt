@@ -1,5 +1,0 @@
-index.rst:104: [redirected permanently] http://docs.python.org/3/library/unittest.html to https://docs.python.org/3/library/unittest.html
-index.rst:34: [redirected with Found] https://pip.pypa.io/ to https://pip.pypa.io/en/stable/
-index.rst:13: [redirected permanently] https://selenium.dev to https://www.selenium.dev/
-index.rst:15: [redirected permanently] https://seleniumhq.github.io/selenium/docs/api/py/api.html to https://www.selenium.dev/selenium/docs/api/py/api.html
-index.rst:42: [redirected with Found] http://www.virtualenv.org/ to https://virtualenv.pypa.io/en/latest/

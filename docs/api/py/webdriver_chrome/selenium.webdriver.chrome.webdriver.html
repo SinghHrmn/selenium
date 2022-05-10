@@ -36,8 +36,49 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="selenium-webdriver-chrome-webdriver">
-<h1>selenium.webdriver.chrome.webdriver<a class="headerlink" href="#selenium-webdriver-chrome-webdriver" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-selenium.webdriver.chrome.webdriver">
+<span id="selenium-webdriver-chrome-webdriver"></span><h1>selenium.webdriver.chrome.webdriver<a class="headerlink" href="#module-selenium.webdriver.chrome.webdriver" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#selenium.webdriver.chrome.webdriver.WebDriver" title="selenium.webdriver.chrome.webdriver.WebDriver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WebDriver</span></code></a>([executable_path,&nbsp;port,&nbsp;…])</td>
+<td>Controls the ChromeDriver and allows you to drive the browser.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="selenium.webdriver.chrome.webdriver.WebDriver">
+<em class="property">class </em><code class="descclassname">selenium.webdriver.chrome.webdriver.</code><code class="descname">WebDriver</code><span class="sig-paren">(</span><em>executable_path='chromedriver'</em>, <em>port=0</em>, <em>options: selenium.webdriver.chrome.options.Options = None</em>, <em>service_args=None</em>, <em>desired_capabilities=None</em>, <em>service_log_path=None</em>, <em>chrome_options=None</em>, <em>service: selenium.webdriver.chrome.service.Service = None</em>, <em>keep_alive=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/selenium/webdriver/chrome/webdriver.html#WebDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.chrome.webdriver.WebDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the ChromeDriver and allows you to drive the browser.
+You will need to download the ChromeDriver executable from
+<a class="reference external" href="http://chromedriver.storage.googleapis.com/index.html">http://chromedriver.storage.googleapis.com/index.html</a></p>
+<p>Creates a new instance of the chrome driver.
+Starts the service and then creates new instance of chrome driver.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li>executable_path - Deprecated: path to the executable. If the default is used it assumes the executable is in the $PATH</li>
+<li>port - Deprecated: port you would like the service to run, if left as 0, a free port will be found.</li>
+<li>options - this takes an instance of ChromeOptions</li>
+<li>service - Service object for handling the browser driver if you need to pass extra details</li>
+<li>service_args - Deprecated: List of args to pass to the driver service</li>
+<li>desired_capabilities - Deprecated: Dictionary object with non-browser specific
+capabilities only, such as “proxy” or “loggingPref”.</li>
+<li>service_log_path - Deprecated: Where to log information from the driver.</li>
+<li>keep_alive - Deprecated: Whether to configure ChromeRemoteConnection to use HTTP keep-alive.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 

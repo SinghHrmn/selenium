@@ -36,8 +36,49 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="selenium-webdriver-ie-service">
-<h1>selenium.webdriver.ie.service<a class="headerlink" href="#selenium-webdriver-ie-service" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-selenium.webdriver.ie.service">
+<span id="selenium-webdriver-ie-service"></span><h1>selenium.webdriver.ie.service<a class="headerlink" href="#module-selenium.webdriver.ie.service" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#selenium.webdriver.ie.service.Service" title="selenium.webdriver.ie.service.Service"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Service</span></code></a>(executable_path,&nbsp;port,&nbsp;host,&nbsp;…)</td>
+<td>Object that manages the starting and stopping of the IEDriver</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="selenium.webdriver.ie.service.Service">
+<em class="property">class </em><code class="descclassname">selenium.webdriver.ie.service.</code><code class="descname">Service</code><span class="sig-paren">(</span><em>executable_path: str = 'IEDriverServer.exe'</em>, <em>port: int = 0</em>, <em>host: str = None</em>, <em>log_level: str = None</em>, <em>log_file: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/selenium/webdriver/ie/service.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.ie.service.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object that manages the starting and stopping of the IEDriver</p>
+<p>Creates a new instance of the Service</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li>executable_path : Path to the IEDriver</li>
+<li>port : Port the service is running on</li>
+<li>host : IP address the service port is bound</li>
+<li>log_level : Level of logging of service, may be “FATAL”, “ERROR”, “WARN”, “INFO”, “DEBUG”, “TRACE”.
+Default is “FATAL”.</li>
+<li>log_file : Target of logging of service, may be “stdout”, “stderr” or file path.
+Default is “stdout”.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="selenium.webdriver.ie.service.Service.command_line_args">
+<code class="descname">command_line_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[str]<a class="reference internal" href="../_modules/selenium/webdriver/ie/service.html#Service.command_line_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#selenium.webdriver.ie.service.Service.command_line_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 
