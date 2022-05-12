@@ -97,12 +97,6 @@ class VirtualAuthenticatorOptions {
       "isUserConsenting": this.getIsUserConsenting(),
       "isUserVerified": this.getIsUserVerified(),
 
-      // this.getProtocol(),
-      // this.getTransport(),
-      // this.getHasResidentKey(),
-      // this.getHasUserVerification(),
-      // this.getIsUserConsenting(),
-      // this.getIsUserVerified(),
     }
   }
 }
@@ -124,12 +118,8 @@ class Credential {
     this._signCount = signCount
   }
 
-  //   id() {
-  //     return this._id
-  //   }
-
   id() {
-    return Buffer.from(this._id).toString('base64')
+    return Buffer.from(this._id).toString('base64url')
   }
 
   isResidentCredential() {
@@ -146,7 +136,7 @@ class Credential {
 
   userHandle() {
     if (this._userHandle) {
-      return Buffer.from(this._userHandle).toString('base64')
+      return Buffer.from(this._userHandle).toString('base64url')
     }
     return null
   }
@@ -156,7 +146,7 @@ class Credential {
   //   }
 
   privateKey() {
-    return Buffer.from(this._privateKey).toString('base64')
+    return Buffer.from(this._privateKey, 'binary').toString('base64url')
   }
 
   signCount() {
@@ -175,11 +165,11 @@ class Credential {
 
   toDict() {
     let credentialData = {
-      credentialId: this.id(),
-      isResidentCredential: this.isResidentCredential(),
-      rpId: this.rpId(),
-      privateKey: this.privateKey(),
-      signCount: this.signCount(),
+      'credentialId': this.id(),
+      'isResidentCredential': this.isResidentCredential(),
+      'rpId': this.rpId(),
+      'privateKey': this.privateKey(),
+      'signCount': this.signCount(),
     }
 
     if (this.userHandle() != null) {
@@ -190,15 +180,15 @@ class Credential {
   }
 
   fromDict(data) {
-    let _id = Buffer.from(data['privateKey'], 'base64').toString()
+    let _id = Buffer.from(data['privateKey'], 'base64url').toString()
     let isResidentCredential = data['isResidentCredential']
     let rpId = data['rpId']
-    let privateKey = Buffer.from(data['privateKey'], 'base64').toString()
+    let privateKey = Buffer.from(data['privateKey'], 'base64url').toString()
     let signCount = data['signCount']
     let userHandle
 
     if ('userHandle' in data) {
-      userHandle = Buffer.from(data[('userHandle', 'base64')]).toString()
+      userHandle = Buffer.from(data[('userHandle', 'base64url')]).toString()
     } else {
       userHandle = null
     }

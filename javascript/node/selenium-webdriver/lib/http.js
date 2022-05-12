@@ -544,7 +544,7 @@ function parseHttpResponse(command, httpResponse) {
 
   let parsed = tryParse(httpResponse.body)
 
-  console.log("httpResponsbody = ", httpResponse)
+  console.log("Response for ", command, " = ", httpResponse)
 
   if (parsed && typeof parsed === 'object') {
     let value = parsed.value

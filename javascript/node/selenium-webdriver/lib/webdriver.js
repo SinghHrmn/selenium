@@ -735,7 +735,7 @@ class WebDriver {
 
     let parameters = await toWireValue(command.getParameters())
     command.setParameters(parameters)
-    console.log('command = ', command)
+    // console.log('command = ', command)
     let value = await this.executor_.execute(command)
     return fromWireValue(this, value)
   }
@@ -1527,54 +1527,64 @@ class WebDriver {
   }
 
   addVirtualAuthenticator(options) {
-    console.log("authenticatorID_ Old", this.authenticatorId_)
-    console.log("OPTIONS = ", options)
+    // console.log("authenticatorID_ Old", this.authenticatorId_)
+    // console.log("OPTIONS = ", options)
 
     this.authenticatorId_ = this.execute(
-      new command.Command(command.Name.ADD_VIRTUAL_AUTHENTICATOR).setParameter(
-        'options',
+      new command.Command(command.Name.ADD_VIRTUAL_AUTHENTICATOR).setParameters(
         options.toDict()
       )
     )
 
-    console.log("authenticatorID_ New", this.authenticatorId_)
+    // console.log("authenticatorID_ New", await this.authenticatorId_)
   }
 
   removeVirtualAuthenticator() {
-    this.execute(
+    console.log('authn id = ', this.authenticatorId_)
+    let response = this.execute(
       new command.Command(
         command.Name.REMOVE_VIRTUAL_AUTHENTICATOR
       ).setParameter('authenticatorId', this.authenticatorId_)
     )
     this.authenticatorId_ = null
+    return response
   }
 
   addCredential(credential) {
-    this.execute(new command.Command(command.Name.ADD_CREDENTIAL)
-        .setParameter(credential) // DOUBT!!!
-        .setParameter('authenticatorId', authenticatorId_)
-    )
-  }
+    
+    let tcred = credential.toDict()
+    tcred['authenticatorId'] = this.authenticatorId_
+
+    console.log('tcred = ', tcred)
+
+    this.execute(
+        new command.Command(
+          command.Name.ADD_CREDENTIAL
+          ).setParameters(tcred)
+      )
+    
+  } 
 
   getCredentials() {
-    credential_data = this.execute(new command.Command(command.Name.GET_CREDENTIALS)
-      .setParameter('authenticatorId', authenticatorId_))
-      return credential_data.value
+    let credential_data = this.execute(new command.Command(command.Name.GET_CREDENTIALS)
+      .setParameter('authenticatorId', this.virtualAuthenticatorId()))
+      console.log("get cred = ", credential_data)
+      return credential_data
   }
 
   removeCredential(credential_id) {
-    this.execute(new command.Command(command.Name.REMOVE_CREDENTIAL)
+    return this.execute(new command.Command(command.Name.REMOVE_CREDENTIAL)
       .setParameter('credentialId', credential_id)
-      .setParameter('authenticatorId', authenticatorId_))
+      .setParameter('authenticatorId', this.authenticatorId_))
   }
 
   removeAllCredentials() {
-    this.execute(new command.Command(command.Name.REMOVE_ALL_CREDENTIALS)
+    return this.execute(new command.Command(command.Name.REMOVE_ALL_CREDENTIALS)
       .setParameter('authenticatorId', authenticatorId_))
   }
 
   setUserVerified(verified) {
-    this.execute(new command.Command(command.Name.SET_USER_VERIFIED)
+    return this.execute(new command.Command(command.Name.SET_USER_VERIFIED)
       .setParameter('authenticatorId', authenticatorId_))
       .setParameter('isUserVerified', verified)
   }
