@@ -108,7 +108,7 @@ let Server = function (requestHandler) {
     const pathname = opt_pathname || ''
     return url.format({
       protocol: 'http',
-      hostname:  'localhost', //net.getLoopbackAddress(),
+      hostname: net.getLoopbackAddress(),
       port: addr.port,
       pathname: pathname,
     })
