@@ -45,58 +45,93 @@ describe('Credentials', function () {
     _id: new Uint8Array([1, 2, 3, 4]),
     rpId: 'localhost',
     userHandle: new Uint8Array([1]),
-    privateKey: Buffer.from(BASE64_ENCODED_PK, 'base64').toString(),
+    privateKey: Buffer.from(BASE64_ENCODED_PK, 'base64').toString('binary'),
     signCount: 0,
   }
 
   it('can testRkEnabledCredential', function () {
     const { _id, rpId, userHandle, privateKey, signCount } = data
-    const credential = new virtualAuthenticatorCredential().createResidentCredential(
-      _id,
-      rpId,
-      userHandle,
-      privateKey,
-      signCount
-    )
+    const credential =
+      new virtualAuthenticatorCredential().createResidentCredential(
+        _id,
+        rpId,
+        userHandle,
+        privateKey,
+        signCount
+      )
 
+    let testCredentialId = new Uint8Array([1, 2, 3, 4])
+
+    /**
+     * Checking if credential.id() matches with testCredentialId. Both values are
+     * arrays so we check if the lengths of both are equal and if one array has
+     * all its elements in the other array and vice-versa.
+     */
     assert.equal(
-      credential.id(),
-      Buffer.from(new Uint8Array([1, 2, 3, 4])).toString('base64')
+      credential.id().length == testCredentialId.length &&
+        credential.id().every((item) => testCredentialId.includes(item)) &&
+        testCredentialId.every((item) => credential.id().includes(item)),
+      true
     )
     if (credential.isResidentCredential() == true) {
       assert(true)
+    } else {
+      assert(false)
     }
-
     assert.equal(credential.rpId(), 'localhost')
+
+    let testUserHandle = new Uint8Array([1])
+
+    /**
+     * Checking if credential.userHandle() matches with testUserHandle. Both values are
+     * arrays so we check if the lengths of both are equal and if one array has
+     * all its elements in the other array and vice-versa.
+     */
     assert.equal(
-      credential.userHandle(),
-      Buffer.from(new Uint8Array([1])).toString('base64')
+      credential.userHandle().length == testUserHandle.length &&
+        credential
+          .userHandle()
+          .every((item) => testUserHandle.includes(item)) &&
+        testUserHandle.every((item) => credential.userHandle().includes(item)),
+      true
     )
     assert.equal(
       credential.privateKey(),
-      Buffer.from(privateKey).toString('base64')
+      Buffer.from(BASE64_ENCODED_PK, 'base64url').toString('binary')
     )
     assert.equal(credential.signCount(), 0)
   })
 
-  it('can testRkDisabledCredential', function() {
+  it('can testRkDisabledCredential', function () {
     const { _id, rpId, userHandle, privateKey, signCount } = data
-    const credential = new virtualAuthenticatorCredential().createNonResidentCredential(
-      _id,
-      rpId,
-      privateKey,
-      signCount
+    const credential =
+      new virtualAuthenticatorCredential().createNonResidentCredential(
+        _id,
+        rpId,
+        privateKey,
+        signCount
+      )
+
+    let testCredentialId = new Uint8Array([1, 2, 3, 4])
+
+    /**
+     * Checking if credential.id() matches with testCredentialId. Both values are
+     * arrays so we check if the lengths of both are equal and if one array has
+     * all its elements in the other array and vice-versa.
+     */
+    assert.equal(
+      credential.id().length == testCredentialId.length &&
+        credential.id().every((item) => testCredentialId.includes(item)) &&
+        testCredentialId.every((item) => credential.id().includes(item)),
+      true
     )
 
-    assert.equal(
-      credential.id(),
-      Buffer.from(new Uint8Array([1, 2, 3, 4])).toString('base64')
-    )
     if (credential.isResidentCredential() == false) {
       assert(true)
     } else {
       assert(false)
     }
+
     if (credential.userHandle() == null) {
       assert(true)
     } else {
@@ -106,19 +141,19 @@ describe('Credentials', function () {
 
   it('can testToDict', function () {
     const { _id, rpId, userHandle, privateKey, signCount } = data
-    const credential = new virtualAuthenticatorCredential().createResidentCredential(
-      _id,
-      rpId,
-      userHandle,
-      privateKey,
-      signCount
-    )
+    const credential =
+      new virtualAuthenticatorCredential().createResidentCredential(
+        _id,
+        rpId,
+        userHandle,
+        privateKey,
+        signCount
+      )
 
     let credential_dict = credential.toDict()
-    console.log(credential_dict)
     assert.equal(
       credential_dict['credentialId'],
-      Buffer.from(new Uint8Array([1, 2, 3, 4])).toString('base64')
+      Buffer.from(new Uint8Array([1, 2, 3, 4])).toString('base64url')
     )
 
     if (credential_dict['isResidentCredential'] == true) {
@@ -130,13 +165,66 @@ describe('Credentials', function () {
     assert.equal(credential_dict['rpId'], 'localhost')
     assert.equal(
       credential_dict['userHandle'],
-      Buffer.from(new Uint8Array([1])).toString('base64')
+      Buffer.from(new Uint8Array([1])).toString('base64url')
+    )
+    assert.equal(
+      credential_dict['privateKey'],
+      Buffer.from(privateKey, 'binary').toString('base64url')
+    )
+    assert.equal(credential_dict['signCount'], 0)
+  })
+
+  it('can testFromDict', function () {
+    let credential_data = {
+      credentialId: Buffer.from(new Uint8Array([1, 2, 3, 4])).toString(
+        'base64url'
+      ),
+      isResidentCredential: true,
+      rpId: 'localhost',
+      userHandle: Buffer.from(new Uint8Array([1])).toString('base64url'),
+      privateKey: BASE64_ENCODED_PK,
+      signCount: 0,
+    }
+
+    let credential = new virtualAuthenticatorCredential().fromDict(
+      credential_data
+    )
+    let testCredentialId = new Uint8Array([1, 2, 3, 4])
+    assert.equal(
+      credential.id().length == testCredentialId.length &&
+        credential.id().every((item) => testCredentialId.includes(item)) &&
+        testCredentialId.every((item) => credential.id().includes(item)),
+      true
+    )
+
+    if (credential.isResidentCredential() == true) {
+      assert(true)
+    } else {
+      assert(false)
+    }
+
+    assert.equal(credential.rpId(), 'localhost')
+
+    let testUserHandle = new Uint8Array([1])
+
+    /**
+     * Checking if credential.userHandle() matches with testUserHandle. Both values are
+     * arrays so we check if the lengths of both are equal and if one array has
+     * all its elements in the other array and vice-versa.
+     */
+    assert.equal(
+      credential.userHandle().length == testUserHandle.length &&
+        credential
+          .userHandle()
+          .every((item) => testUserHandle.includes(item)) &&
+        testUserHandle.every((item) => credential.userHandle().includes(item)),
+      true
     )
 
     assert.equal(
-      credential_dict['privateKey'],
-      Buffer.from(privateKey).toString('base64')
+      credential.privateKey(),
+      Buffer.from(BASE64_ENCODED_PK, 'base64url').toString('binary')
     )
-    assert.equal(credential_dict['signCount'], 0)
+    assert.equal(credential.signCount(), 0)
   })
 })

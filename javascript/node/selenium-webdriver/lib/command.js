@@ -164,7 +164,7 @@ const Name = {
   FIND_ELEMENT_FROM_SHADOWROOT: 'findElementFromShadowRoot',
   FIND_ELEMENTS_FROM_SHADOWROOT: 'findElementsFromShadowRoot',
 
-  // Virtual Authenticator
+  // Virtual Authenticator Commands
   ADD_VIRTUAL_AUTHENTICATOR : 'addVirtualAuthenticator',
   REMOVE_VIRTUAL_AUTHENTICATOR : 'removeVirtualAuthenticator',
   ADD_CREDENTIAL : 'addCredential',

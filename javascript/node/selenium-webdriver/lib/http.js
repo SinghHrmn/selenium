@@ -410,7 +410,6 @@ function buildRequest(customCommands, command) {
     LOG.finest(() => `Building HTTP request: ${JSON.stringify(resource)}`)
     let parameters = command.getParameters()
     let path = buildPath(resource.path, parameters)
-    // console.log("resource.method, path, parameters....\n", resource.method, " ", path, " ", parameters )
     return new Request(resource.method, path, parameters)
   }
 }
@@ -478,8 +477,6 @@ class Executor {
       CLIENTS.set(this, client)
     }
 
-    console.log('request = ', request)
-
     let response = await client.send(request)
     this.log_.finer(() => `>>>\n${request}\n<<<\n${response}`)
 
@@ -543,8 +540,6 @@ function parseHttpResponse(command, httpResponse) {
   }
 
   let parsed = tryParse(httpResponse.body)
-
-  console.log("Response for ", command, " = ", httpResponse)
 
   if (parsed && typeof parsed === 'object') {
     let value = parsed.value

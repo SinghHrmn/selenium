@@ -102,7 +102,6 @@ describe('VirtualAuthenticatorOptions', function () {
 
   it('can testToDictWithDefaults', function () {
     let default_options = options.toDict()
-    console.log(default_options)
     assert.equal(
       default_options['transport'],
       virtualAuthenticatorOptions.Transport['USB']

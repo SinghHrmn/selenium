@@ -17,6 +17,10 @@
 
 'use strict'
 
+/**
+ * Options for the creation of virtual authenticators.
+ * @see http://w3c.github.io/webauthn/#sctn-automation
+ */
 class VirtualAuthenticatorOptions {
 
   static Protocol = {
@@ -29,8 +33,11 @@ class VirtualAuthenticatorOptions {
     "USB": 'usb',
     "NFC": 'nfc',
     "INTERNAL": 'internal',
-  } 
+  }
 
+  /**
+   * Constructor to initialise VirtualAuthenticatorOptions object.
+   */
   constructor() {
     this._protocol = VirtualAuthenticatorOptions.Protocol["CTAP2"]
     this._transport = VirtualAuthenticatorOptions.Transport["USB"]
@@ -101,6 +108,10 @@ class VirtualAuthenticatorOptions {
   }
 }
 
+/**
+ * A credential stored in a virtual authenticator.
+ * @see https://w3c.github.io/webauthn/#credential-parameters
+ */
 class Credential {
   constructor(
     credentialId,
@@ -119,7 +130,7 @@ class Credential {
   }
 
   id() {
-    return Buffer.from(this._id).toString('base64url')
+    return this._id
   }
 
   isResidentCredential() {
@@ -130,70 +141,80 @@ class Credential {
     return this._rpId
   }
 
-  //   userHandle() {
-  //     return this._userHandle
-  //   }
-
   userHandle() {
-    if (this._userHandle) {
-      return Buffer.from(this._userHandle).toString('base64url')
+    if (this._userHandle != null) {
+      return this._userHandle
     }
     return null
   }
 
-  //   privateKey() {
-  //     return this._privateKey
-  //   }
-
   privateKey() {
-    return Buffer.from(this._privateKey, 'binary').toString('base64url')
+    return this._privateKey
   }
 
   signCount() {
     return this._signCount
   }
 
-  // Class method
+  /**
+   * Creates a resident (i.e. stateless) credential.
+   * @param id Unique base64 encoded string.
+   * @param rpId Relying party identifier.
+   * @param userHandle userHandle associated to the credential. Must be Base64 encoded string.
+   * @param privateKey Base64 encoded PKCS
+   * @param signCount intital value for a signature counter.
+   * @returns A resident credential
+   */
   createResidentCredential(id, rpId, userHandle, privateKey, signCount) {
     return new Credential(id, true, rpId, userHandle, privateKey, signCount)
   }
 
-  // Class method
+  /**
+   * Creates a non resident (i.e. stateless) credential.
+   * @param id Unique base64 encoded string.
+   * @param rpId Relying party identifier.
+   * @param privateKey Base64 encoded PKCS
+   * @param signCount intital value for a signature counter.
+   * @returns A non-resident credential
+   */
   createNonResidentCredential(id, rpId, privateKey, signCount) {
     return new Credential(id, false, rpId, null, privateKey, signCount)
   }
 
   toDict() {
     let credentialData = {
-      'credentialId': this.id(),
-      'isResidentCredential': this.isResidentCredential(),
-      'rpId': this.rpId(),
-      'privateKey': this.privateKey(),
-      'signCount': this.signCount(),
+      'credentialId': Buffer.from(this._id).toString('base64url'),
+      'isResidentCredential': this._isResidentCredential,
+      'rpId': this._rpId,
+      'privateKey': Buffer.from(this._privateKey, 'binary').toString('base64url'),
+      'signCount': this._signCount,
     }
 
     if (this.userHandle() != null) {
-      credentialData['userHandle'] = this.userHandle()
+      credentialData['userHandle'] = Buffer.from(this._userHandle).toString('base64url')
     }
 
     return credentialData
   }
 
+  /**
+   * Creates a credential from a map.
+   */
   fromDict(data) {
-    let _id = Buffer.from(data['privateKey'], 'base64url').toString()
+    let id = new Uint8Array(Buffer.from(data['credentialId'], 'base64url'))
     let isResidentCredential = data['isResidentCredential']
     let rpId = data['rpId']
-    let privateKey = Buffer.from(data['privateKey'], 'base64url').toString()
+    let privateKey = Buffer.from(data['privateKey'], 'base64url').toString('binary')
     let signCount = data['signCount']
     let userHandle
 
     if ('userHandle' in data) {
-      userHandle = Buffer.from(data[('userHandle', 'base64url')]).toString()
+      userHandle = new Uint8Array(Buffer.from(data['userHandle'], 'base64url'))
     } else {
       userHandle = null
     }
     return new Credential(
-      _id,
+      id,
       isResidentCredential,
       rpId,
       userHandle,

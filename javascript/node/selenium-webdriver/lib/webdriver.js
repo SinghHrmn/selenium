@@ -37,6 +37,8 @@ const { Capabilities } = require('./capabilities')
 const path = require('path')
 const { NoSuchElementError } = require('./error')
 const cdpTargets = ['page', 'browser']
+const Credential =
+  require('./virtual_authenticator').Credential
 
 // Capability names that are defined in the W3C spec.
 const W3C_CAPABILITY_NAMES = new Set([
@@ -680,6 +682,7 @@ class WebDriver {
     /** @private @const {(function(this: void): ?|undefined)} */
     this.onQuit_ = onQuit
 
+    /** @private {./virtual_authenticator}*/
     this.authenticatorId_ = null
   }
 
@@ -735,7 +738,6 @@ class WebDriver {
 
     let parameters = await toWireValue(command.getParameters())
     command.setParameters(parameters)
-    // console.log('command = ', command)
     let value = await this.executor_.execute(command)
     return fromWireValue(this, value)
   }
@@ -1520,73 +1522,111 @@ class WebDriver {
     })
   }
 
-  // Virtual Authenticator 
-
+  /**
+   * 
+   * @returns The value of authenticator ID added
+   */
   virtualAuthenticatorId() {
     return this.authenticatorId_
   }
 
-  addVirtualAuthenticator(options) {
-    // console.log("authenticatorID_ Old", this.authenticatorId_)
-    // console.log("OPTIONS = ", options)
-
-    this.authenticatorId_ = this.execute(
+  /**
+   * Adds a virtual authenticator with the given options.
+   * @param options VirtualAuthenticatorOptions object to set authenticator optons.
+   */
+  async addVirtualAuthenticator(options) {
+    this.authenticatorId_ = await this.execute(
       new command.Command(command.Name.ADD_VIRTUAL_AUTHENTICATOR).setParameters(
         options.toDict()
       )
     )
-
-    // console.log("authenticatorID_ New", await this.authenticatorId_)
   }
 
-  removeVirtualAuthenticator() {
-    console.log('authn id = ', this.authenticatorId_)
-    let response = this.execute(
+  /**
+   * Removes a previously added virtual authenticator. The authenticator is no
+   * longer valid after removal, so no methods may be called.
+   */
+  async removeVirtualAuthenticator() {
+    await this.execute(
       new command.Command(
         command.Name.REMOVE_VIRTUAL_AUTHENTICATOR
       ).setParameter('authenticatorId', this.authenticatorId_)
     )
     this.authenticatorId_ = null
-    return response
   }
 
-  addCredential(credential) {
-    
-    let tcred = credential.toDict()
-    tcred['authenticatorId'] = this.authenticatorId_
+  /**
+   * Injects a credential into the authenticator.
+   * @param credential Credential to be added
+   */
+  async addCredential(credential) {
+    credential = credential.toDict()
+    credential['authenticatorId'] = this.authenticatorId_
+    await this.execute(
+      new command.Command(command.Name.ADD_CREDENTIAL).setParameters(credential)
+    )
+  }
 
-    console.log('tcred = ', tcred)
-
-    this.execute(
-        new command.Command(
-          command.Name.ADD_CREDENTIAL
-          ).setParameters(tcred)
+  /**
+   * 
+   * @returns The list of credentials owned by the authenticator.
+   */
+  async getCredentials() {
+    let credential_data = await this.execute(
+      new command.Command(command.Name.GET_CREDENTIALS).setParameter(
+        'authenticatorId',
+        this.virtualAuthenticatorId()
       )
-    
-  } 
-
-  getCredentials() {
-    let credential_data = this.execute(new command.Command(command.Name.GET_CREDENTIALS)
-      .setParameter('authenticatorId', this.virtualAuthenticatorId()))
-      console.log("get cred = ", credential_data)
-      return credential_data
+    )
+    var credential_list = []
+    for(var i = 0; i < credential_data.length; i++) {
+      credential_list.push(new Credential().fromDict(credential_data[i]))
+    }
+    return credential_list
   }
 
-  removeCredential(credential_id) {
-    return this.execute(new command.Command(command.Name.REMOVE_CREDENTIAL)
-      .setParameter('credentialId', credential_id)
-      .setParameter('authenticatorId', this.authenticatorId_))
+  /**
+   * Removes a credential from the authenticator.
+   * @param credential_id The ID of the credential to be removed.
+   */
+  async removeCredential(credential_id) {
+
+    // If credential_id is not a base64url, then convert it to base64url.
+    if (Array.isArray(credential_id)) {
+      credential_id = Buffer.from(credential_id).toString('base64url')
+    }
+
+    await this.execute(
+      new command.Command(command.Name.REMOVE_CREDENTIAL)
+        .setParameter('credentialId', credential_id)
+        .setParameter('authenticatorId', this.authenticatorId_)
+    )
   }
 
-  removeAllCredentials() {
-    return this.execute(new command.Command(command.Name.REMOVE_ALL_CREDENTIALS)
-      .setParameter('authenticatorId', authenticatorId_))
+  /**
+   * Removes all the credentials from the authenticator.
+   */
+  async removeAllCredentials() {
+    await this.execute(
+      new command.Command(command.Name.REMOVE_ALL_CREDENTIALS).setParameter(
+        'authenticatorId',
+        this.authenticatorId_
+      )
+    )
   }
 
-  setUserVerified(verified) {
-    return this.execute(new command.Command(command.Name.SET_USER_VERIFIED)
-      .setParameter('authenticatorId', authenticatorId_))
-      .setParameter('isUserVerified', verified)
+  /**
+   * Sets whether the authenticator will simulate success or fail on user verification.
+   * @param verified true if the authenticator will pass user verification, false otherwise.
+   */
+  async setUserVerified(verified) {
+    await this.execute(
+      new command.Command(command.Name.SET_USER_VERIFIED)
+      .setParameter(
+        'authenticatorId',
+        this.authenticatorId_
+      ).setParameter('isUserVerified', verified)
+    )
   }
 }
 
@@ -3246,7 +3286,7 @@ class AlertPromise extends Alert {
 }
 
 // PUBLIC API
-   
+
 module.exports = {
   Alert,
   AlertPromise,
